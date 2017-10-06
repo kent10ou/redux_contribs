@@ -4,9 +4,6 @@ import { bindActionCreators } from 'redux';
 import { fetchGithub } from '../actions/index';
 
 class ContribsGrid extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
 
   componentDidMount() {
     // fire action to fetch 
@@ -41,7 +38,5 @@ function mapStateToProps({ contribs }) { // state.contribs
 function mapDispatchToProps (dispatch) {
   return bindActionCreators({ fetchGithub }, dispatch);
 }
-
-// export default connect(mapStateToProps)(ContribsGrid);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContribsGrid);

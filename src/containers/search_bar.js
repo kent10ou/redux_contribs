@@ -10,10 +10,10 @@ class SearchBar extends Component {
     }
   }
   
-  onInputChange = () => {
-    this.setState({ inputValue: event.target.value });
+  onInputChange(inputValue) {
+    this.setState({ inputValue });
     // filter the grid
-    
+    this.props.onSearchTermChange(inputValue);
   }
 
   render() {
@@ -22,7 +22,7 @@ class SearchBar extends Component {
           className="form-control"
           placeholder="find a contributor"
           value={this.state.inputValue}
-          onChange={this.onInputChange}
+          onChange={event => this.onInputChange(event.target.value)}
         />
     );
   }
