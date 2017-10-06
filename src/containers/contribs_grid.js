@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class ContribsGrid extends Component {
+  componentDidMount() {
+    
+  }
+
   render() {
     return (
       <div>
