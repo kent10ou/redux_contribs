@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import ContribsReducer from './contribs_reducer';
 
 const rootReducer = combineReducers({
-  state: (state={}) => state
+  contribs: ContribsReducer
 });
 
 export default rootReducer;
