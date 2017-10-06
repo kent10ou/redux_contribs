@@ -4,20 +4,35 @@ import { bindActionCreators } from 'redux';
 import { fetchGithub } from '../actions/index';
 
 class ContribsGrid extends Component {
+  // constructor(props) {
+  //   super(props)
+  // }
+
   componentDidMount() {
     // fire action to fetch 
     console.log('component mounted');
     this.props.fetchGithub();
   }
 
+  renderData (data) {
+    return (
+      <div key={data.login}>{data.login}</div>
+    )
+  }
+
   render() {
+    const { contribs } = this.props;
+    console.log('data: ', contribs);
+
     return (
       <div>
-        GRID OF CONTRIBUTORS
+        CONTRIBUTORS OF REACTJS/REDUX
+        <div>{ !contribs.payload ? <p>LOADING</p> : this.props.contribs.payload.map(this.renderData)}</div>
       </div>
     );
   }
 }
+
 
 function mapStateToProps({ contribs }) { // state.contribs
   return { contribs }; // { contribs: contribs }
@@ -29,5 +44,4 @@ function mapDispatchToProps (dispatch) {
 
 // export default connect(mapStateToProps)(ContribsGrid);
 
-
-export default connect(null, mapDispatchToProps)(ContribsGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(ContribsGrid);

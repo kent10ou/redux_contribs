@@ -11,7 +11,7 @@ export function fetchGithub () {
   return {
     type: FETCH_GITHUB,
     payload: new Promise(resolve => {
-      fetch(`https://api.github.com/`)
+      fetch(`https://api.github.com/repos/reactjs/redux/contributors`)
         .then(response => {
           resolve(response.json());
         })
