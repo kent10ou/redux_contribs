@@ -1,0 +1,16 @@
+
+.contribs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.contrib-item {
+  margin: 20px;
+  text-align: center;
+}
+
+.avatar {
+  width: 150px;
+  border-radius: 50%;
+}

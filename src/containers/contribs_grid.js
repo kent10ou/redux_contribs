@@ -6,31 +6,30 @@ import { fetchGithub } from '../actions/index';
 import Contribs from './contribs'
 
 class ContribsGrid extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount() {
     // fire action to fetch 
-    console.log('component mounted');
-    // this.props.fetchGithub();
+    console.log('contribsGrid component mounted');
+    this.props.fetchGithub();
   }
 
   renderData (data, idx) {
     return (
-      <div key={idx}>
-        <img src={data.avatar_url} key={data.id} />
-        <div className="username" key={data.login}>{data.login}</div>
-      </div>
+      <Contribs key={idx} data={data} />
     )
   }
 
   render() {
-    const { contribs } = this.props;
-    const { filterTerm } = this.props;
+    const { contribs, filterTerm } = this.props;
     console.log('data: ', this.props);
 
+    // if data is not loaded yet -> 'loading', otherwise map through data and render Contribs comp. 
     return (
       <div>
-        CONTRIBUTORS OF REACTJS/REDUX
-        <div>{ !contribs.payload ? <p>LOADING</p> : contribs.payload.map(this.renderData)}</div>
+        <div className='contribs-grid'>{ !contribs.payload ? <p>LOADING</p> : contribs.payload.map(this.renderData)}</div>
       </div>
     );
   }

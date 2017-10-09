@@ -12,7 +12,7 @@ export function fetchGithub () {
     type: FETCH_GITHUB,
     payload: new Promise(resolve => {
       let pageNum = 1;
-      fetch(`https://api.github.com/repos/reactjs/redux/contributors?anon=1&page=${pageNum}`)
+      fetch(`https://api.github.com/repos/reactjs/redux/contributors?anon=1&per_page=100&page=${pageNum}`)
         .then(response => {
           resolve(response.json());
         })

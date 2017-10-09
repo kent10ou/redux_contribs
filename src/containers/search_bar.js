@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import _ from 'underscore';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -14,6 +15,10 @@ class SearchBar extends Component {
     this.setState({ inputValue });
     // filter the grid
     this.props.onSearchTermChange(inputValue);
+
+    let newDisplay = _.filter(this.props.contribs.payload, person => person.login.includes())
+
+    
   }
 
   render() {
@@ -28,4 +33,8 @@ class SearchBar extends Component {
   }
 }
 
-export default SearchBar;
+function mapStateToProps({ contribs }) { // state.contribs
+  return { contribs }; // { contribs: contribs }
+}
+
+export default connect(mapStateToProps)(SearchBar);
