@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchGithub } from '../actions/index';
+import { fetchContribsIfNeeded } from '../actions/index';
 
 import Contribs from './contribs'
 
@@ -13,7 +13,7 @@ class ContribsGrid extends Component {
   componentDidMount() {
     // fire action to fetch 
     console.log('contribsGrid component mounted');
-    this.props.fetchGithub();
+    // this.props.fetchContribsIfNeeded();
   }
 
   renderData (data, idx) {
@@ -24,7 +24,7 @@ class ContribsGrid extends Component {
 
   render() {
     const { contribs, filterTerm } = this.props;
-    console.log('data: ', this.props);
+    // console.log('contribs_grid - props: ', this.props);
 
     // if data is not loaded yet -> 'loading', otherwise map through data and render Contribs comp. 
     return (
@@ -41,7 +41,7 @@ function mapStateToProps({ contribs }) { // state.contribs
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fetchGithub }, dispatch);
+  return bindActionCreators({ fetchContribsIfNeeded }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContribsGrid);

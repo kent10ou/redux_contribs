@@ -10,15 +10,11 @@ class SearchBar extends Component {
       inputValue: ''
     }
   }
-  
+
   onInputChange(inputValue) {
     this.setState({ inputValue });
-    // filter the grid
+    // modify on props
     this.props.onSearchTermChange(inputValue);
-
-    let newDisplay = _.filter(this.props.contribs.payload, person => person.login.includes())
-
-    
   }
 
   render() {

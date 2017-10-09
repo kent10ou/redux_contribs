@@ -1,20 +1,26 @@
 import { FETCH_GITHUB } from '../actions/index';
 
-export default function (state={}, action) {
+const initialState = {
+  isFetching: false,
+  payload: [],
+  page: 1
+}
+
+export default function (state=initialState, action) {
   console.log('action: ', action);
   switch(action.type) {
-    case 'FETCH_GITHUB_PENDING':
+    case 'REQUEST_CONTRIBS':
       return {
         ...state,
         payload: [],
-        isPending: true
+        isFetching: true
       };
 
-    case 'FETCH_GITHUB_FULFILLED':
+    case 'RECEIVE_CONTRIBS':
       return {
         ...state, 
         payload: action.payload, 
-        isPending: false
+        isFetching: false
       } 
 
     default:
