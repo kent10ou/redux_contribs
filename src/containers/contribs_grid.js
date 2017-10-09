@@ -3,28 +3,34 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchGithub } from '../actions/index';
 
+import Contribs from './contribs'
+
 class ContribsGrid extends Component {
 
   componentDidMount() {
     // fire action to fetch 
     console.log('component mounted');
-    this.props.fetchGithub();
+    // this.props.fetchGithub();
   }
 
-  renderData (data) {
+  renderData (data, idx) {
     return (
-      <div key={data.login}>{data.login}</div>
+      <div key={idx}>
+        <img src={data.avatar_url} key={data.id} />
+        <div className="username" key={data.login}>{data.login}</div>
+      </div>
     )
   }
 
   render() {
     const { contribs } = this.props;
-    console.log('data: ', contribs);
+    const { filterTerm } = this.props;
+    console.log('data: ', this.props);
 
     return (
       <div>
         CONTRIBUTORS OF REACTJS/REDUX
-        <div>{ !contribs.payload ? <p>LOADING</p> : this.props.contribs.payload.map(this.renderData)}</div>
+        <div>{ !contribs.payload ? <p>LOADING</p> : contribs.payload.map(this.renderData)}</div>
       </div>
     );
   }

@@ -11,7 +11,8 @@ export function fetchGithub () {
   return {
     type: FETCH_GITHUB,
     payload: new Promise(resolve => {
-      fetch(`https://api.github.com/repos/reactjs/redux/contributors`)
+      let pageNum = 1;
+      fetch(`https://api.github.com/repos/reactjs/redux/contributors?anon=1&page=${pageNum}`)
         .then(response => {
           resolve(response.json());
         })
