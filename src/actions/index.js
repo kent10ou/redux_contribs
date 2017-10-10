@@ -22,20 +22,18 @@ const receiveContribs = (json) => {
 // somewhere in here... Check if data length returned is == 100, if it is...make another call and append data, if not stop
 const fetchGithubContribs = () => {
   return (dispatch) => {
-    let pageNum = 1; 
+    let pageNum = 1;
     dispatch(requestContribs())
-    for (var i = 1; i < 6; i++) {
-      console.log('index: ', i);
       return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=100&page=${pageNum}`)
         .then(response => response.json())
         .then(json => {
-          // if length is equal to 100, fire another fetch with page++ 
-          return dispatch(receiveContribs(json))})
+          return dispatch(receiveContribs(json))
+        })
         .catch(err => console.log(err))
-    }
   }
 }
 
+// returns boolean T/F depending on isFetching
 const shouldFetchContribs = (state) => {
   const isFetching = state.isFetching;
   if (!isFetching) {
@@ -65,8 +63,7 @@ export const searchContribs = (text) =>
 export const filterContribs = (text) =>
   (dispatch, getState) => {
     const { contribs: { allContributors, payload } } = getState();
-    console.log('All contribs: ', getState());
-    const filteredContributors = allContributors
+    const filteredContributors = allContributors 
       .filter(user => {
         return user && user.login && user.login.includes(text);
       })  
