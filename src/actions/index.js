@@ -24,13 +24,15 @@ const fetchGithubContribs = () => {
   return (dispatch) => {
     let pageNum = 1; 
     dispatch(requestContribs())
-    return fetch(`https://api.github.com/repos/reactjs/redux/contributors?anon=1&per_page=100&page=${pageNum}`)
-      .then(response => response.json())
-      .then(json => {
-        // if length is equal to 100, fire another fetch with page++ 
-        
-        return dispatch(receiveContribs(json))})
-      .catch(err => console.log(err))
+    for (var i = 1; i < 6; i++) {
+      console.log('index: ', i);
+      return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=100&page=${pageNum}`)
+        .then(response => response.json())
+        .then(json => {
+          // if length is equal to 100, fire another fetch with page++ 
+          return dispatch(receiveContribs(json))})
+        .catch(err => console.log(err))
+    }
   }
 }
 
@@ -46,6 +48,7 @@ const shouldFetchContribs = (state) => {
 export const fetchContribsIfNeeded = () => {
   return (dispatch, getState) => {
     const state = getState();
+    // if isFetching is false -> fetch content
     if ( shouldFetchContribs(state) ) {
       return dispatch(fetchGithubContribs());
     } else {
@@ -62,7 +65,7 @@ export const searchContribs = (text) =>
 export const filterContribs = (text) =>
   (dispatch, getState) => {
     const { contribs: { allContributors, payload } } = getState();
-    // console.log('All contribs: ', getState());
+    console.log('All contribs: ', getState());
     const filteredContributors = allContributors
       .filter(user => {
         return user && user.login && user.login.includes(text);

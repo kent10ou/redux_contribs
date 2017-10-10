@@ -27,6 +27,8 @@ class ContribsGrid extends Component {
     // console.log('contribs_grid - props: ', this.props);
 
     // if data is not loaded yet -> 'loading', otherwise map through data and render Contribs comp. 
+    if (contribs.isFetching && !contribs.payload.length) { return <p>Loading...</p> }
+
     return (
       <div>
         <div className='contribs-grid'>{contribs.filteredContributors.map(this.renderData)}</div>
