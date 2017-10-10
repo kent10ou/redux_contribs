@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import _ from 'underscore';
 
 class SearchBar extends Component {
-  constructor(props) {
+/*  constructor(props) {
     super(props)
 
     this.state = {
@@ -11,26 +9,32 @@ class SearchBar extends Component {
     }
   }
 
+  // Put the change handler on the container as it bubbles up
   onInputChange(inputValue) {
     this.setState({ inputValue });
     // modify on props
     this.props.onSearchTermChange(inputValue);
-  }
 
+  }
+*/
   render() {
     return (
-        <input 
+        <input
+          id="search-form"
           className="form-control"
           placeholder="find a contributor"
-          value={this.state.inputValue}
-          onChange={event => this.onInputChange(event.target.value)}
+          value={this.props.searchTerm}
+          // onChange={event => this.onInputChange(event.target.value)}
         />
     );
   }
 }
-
+/*
 function mapStateToProps({ contribs }) { // state.contribs
   return { contribs }; // { contribs: contribs }
 }
 
+// Just pass in props from the container instead of connecting to store
 export default connect(mapStateToProps)(SearchBar);
+*/
+export default SearchBar;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchContribsIfNeeded } from '../actions/index';
+import * as actions from '../actions/index';
 
 import SearchBar from '../containers/search_bar';
 import ContribsGrid from '../containers/contribs_grid';
@@ -12,28 +12,35 @@ class App extends Component {
     this.state = {
       searchTerm: '',
     }
+    this.onChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    console.log('APP CDM');
     this.props.fetchContribsIfNeeded();
   }
+  
+  // Put handlers on top level and bubble up events
+  handleChange(e) {
+    e.preventDefault();
+    const { type, target } = e;
+    const { contribs } = this.props;
 
-  userSearch(term) {
-    console.log(term);
-    this.setState( {searchTerm: term });
-
+    if (type === 'change') {
+      if (target.id === 'search-form') {
+        this.props.searchContribs(target.value);
+        this.props.filterContribs(target.value); 
+      } 
+    } 
   }
 
-
-
   render() {
-    const { contribs, filterTerm } = this.props;
-    // console.log('APP DATA: ', this.props);
+    const { contribs } = this.props;
+
     return (
-      <div>
+      <div role="presentation" onChange={this.onChange}>
         <h1>REDUX CONTRIBS</h1>
-        <SearchBar onSearchTermChange={(term) => this.userSearch(term)}/>
+        {/* passing in search term here */}
+        <SearchBar id="search-form" searchTerm={contribs.searchTerm} />
         <ContribsGrid filterTerm={this.state.searchTerm} />
       </div>
     );
@@ -45,7 +52,7 @@ function mapStateToProps({ contribs }) { // state.contribs
 }
 
 function mapDispatchToProps (dispatch) {
-  return bindActionCreators({ fetchContribsIfNeeded }, dispatch);
+  return bindActionCreators({ ...actions }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

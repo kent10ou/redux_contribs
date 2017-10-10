@@ -3,7 +3,10 @@ import { FETCH_GITHUB } from '../actions/index';
 const initialState = {
   isFetching: false,
   payload: [],
-  page: 1
+  page: 1,
+  searchTerm: '',
+  allContributors: [],
+  filteredContributors: []
 }
 
 export default function (state=initialState, action) {
@@ -20,8 +23,24 @@ export default function (state=initialState, action) {
       return {
         ...state, 
         payload: action.payload, 
+        allContributors: action.payload,
+        filteredContributors: action.payload,
         isFetching: false
-      } 
+      }
+    
+    // Filtered the contributors
+    case 'FILTER_CONTRIBUTORS':
+      return {
+        ...state, 
+        filteredContributors: action.payload, 
+      }
+    
+    // Updating the search component
+    case 'UPDATE_SEARCH':
+      return {
+        ...state, 
+        searchTerm: action.payload, 
+      }
 
     default:
       return state;
