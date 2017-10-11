@@ -11,6 +11,7 @@ const initialState = {
 
 export default function (state=initialState, action) {
   console.log('action: ', action);
+  console.log('reducer state: ', state);
   switch(action.type) {
     case 'REQUEST_CONTRIBS':
       return {
@@ -20,9 +21,15 @@ export default function (state=initialState, action) {
       };
 
     case 'RECEIVE_CONTRIBS':
+      // let totalContribs = [];
+      // action.payload.map(contrib => {
+      //   const eachContrib = Object.assign({}, contrib, { votes: 0 })
+      //   totalContribs.push(eachContrib);
+      // })
+
       return {
         ...state, 
-        payload: action.payload, 
+        payload: action.payload,
         allContributors: action.payload,
         filteredContributors: action.payload,
         isFetching: false
@@ -40,6 +47,12 @@ export default function (state=initialState, action) {
       return {
         ...state, 
         searchTerm: action.payload, 
+      }
+
+    case 'UPVOTE': 
+      return {
+        ...state,
+        payload: action.payload
       }
 
     default:

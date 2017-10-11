@@ -8,7 +8,7 @@ class SearchBar extends Component {
           id="search-form"
           className="form-control"
           placeholder="find a contributor"
-          value={this.props.searchTerm}
+          value={this.props.text}
 
         />
     );

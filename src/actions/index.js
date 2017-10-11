@@ -1,9 +1,9 @@
 
 export const FETCH_GITHUB = 'FETCH_GITHUB';
-export const FETCH_PENDING = 'FETCH_PENDING';
-export const FETCH_FULLFILLED = 'FETCH_FULLFILLED';
 export const REQUEST_CONTRIBS = 'REQUEST_CONTRIBS';
 export const RECEIVE_CONTRIBS = 'RECEIVE_CONTRIBS';
+export const UPVOTE = 'UPVOTE';
+export const DOWNVOTE = 'DOWNVOTE';
 
 const requestContribs = () => {
   return {
@@ -19,15 +19,16 @@ const receiveContribs = (json) => {
 }
 
 // thunk action creator
-// somewhere in here... Check if data length returned is == 100, if it is...make another call and append data, if not stop
-const fetchGithubContribs = () => {
+const fetchGithubContribs = (pageNum) => {
   return (dispatch) => {
-    let pageNum = 1;
     dispatch(requestContribs())
-      return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=100&page=${pageNum}`)
+      return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=10&page=${pageNum}`)
         .then(response => response.json())
         .then(json => {
-          return dispatch(receiveContribs(json))
+          const addVotesProperty = json.map((item) => {
+            return { ...item, votes: 0 };
+          })
+          return dispatch(receiveContribs(addVotesProperty))
         })
         .catch(err => console.log(err))
   }
@@ -43,12 +44,12 @@ const shouldFetchContribs = (state) => {
   }
 }
 
-export const fetchContribsIfNeeded = () => {
+export const fetchContribsIfNeeded = (pageNum) => {
   return (dispatch, getState) => {
     const state = getState();
     // if isFetching is false -> fetch content
     if ( shouldFetchContribs(state) ) {
-      return dispatch(fetchGithubContribs());
+      return dispatch(fetchGithubContribs(pageNum));
     } else {
       return Promise.resolve();
     }
@@ -69,3 +70,26 @@ export const filterContribs = (text) =>
       })  
     dispatch({ type: 'FILTER_CONTRIBUTORS', payload: filteredContributors });  
   };
+
+export const upvote = (user) => {
+  console.log('user: ', user);
+  return (dispatch, getState) => {
+    // modify payload here
+    console.log('getState: ', getState())
+    const { contribs: { allContributors, payload } } = getState();
+    const upvotedcontrib = payload.map(contrib => {
+      if (contrib.login == user) {
+        return Object.assign({}, contrib, {votes: contrib.votes + 1})
+      }
+    })
+    dispatch({ type: UPVOTE, payload: upvotedcontrib });
+  }
+
+}
+
+export const downvote = (user) => {
+  return {
+    type: DOWNVOTE,
+    user
+  }
+}

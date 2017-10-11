@@ -16,7 +16,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchContribsIfNeeded();
+    for (var i = 1; i < 3; i++) {
+      this.props.fetchContribsIfNeeded(i);
+    }
   }
   
   // Put handlers on top level and bubble up events
