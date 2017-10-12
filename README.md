@@ -7,6 +7,7 @@ shows list of redux contributors (displays avatar and username) that you can upv
 ```
 	> npm install
 	> npm start
+	> go to localhost:8080 in your browser
 ```
 ### Instructions
 - [X] Create a React web application that loads all of the redux contributors and displays each contributor’s avatar and login name.

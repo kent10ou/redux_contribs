@@ -20,13 +20,14 @@ const receiveContribs = (json) => {
 
 // thunk action creator
 const fetchGithubContribs = (pageNum) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(requestContribs())
       return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=10&page=${pageNum}`)
         .then(response => response.json())
         .then(json => {
-          const addVotesProperty = json.map((item) => {
-            return { ...item, votes: 0 };
+          const addVotesProperty = json.map((item) => { // [{}, {}, ... {}]
+            // add votes property to each contributor
+            return { ...item, votes: 0 }; 
           })
           return dispatch(receiveContribs(addVotesProperty))
         })
@@ -70,13 +71,13 @@ export const filterContribs = (text) =>
       })  
     dispatch({ type: 'FILTER_CONTRIBUTORS', payload: filteredContributors });  
   };
-
+/*
 export const upvote = (user) => {
   console.log('user: ', user);
   return (dispatch, getState) => {
     // modify payload here
-    console.log('getState: ', getState())
     const { contribs: { allContributors, payload } } = getState();
+    console.log(allContributors)
     const upvotedcontrib = payload.map(contrib => {
       if (contrib.login == user) {
         return Object.assign({}, contrib, {votes: contrib.votes + 1})
@@ -84,8 +85,20 @@ export const upvote = (user) => {
     })
     dispatch({ type: UPVOTE, payload: upvotedcontrib });
   }
-
 }
+*/
+export const upvote = (user) => 
+  (dispatch, getState) => {
+    console.log('this is being called', user)
+    const { contribs: { allContributors }} = getState();
+    const arrCopy = [...allContributors]
+    let update = arrCopy.find((contrib) => {
+      return contrib.login == user
+    })
+    update = update.votes + 1
+
+    // dispatch({type: UPVOTE, payload: })
+  }
 
 export const downvote = (user) => {
   return {

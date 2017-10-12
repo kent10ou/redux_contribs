@@ -5,7 +5,7 @@ const initialState = {
   payload: [],
   page: 1,
   searchTerm: '',
-  allContributors: [],
+  allContributors: [],// kentou: {name: kenou, vote: 0},
   filteredContributors: []
 }
 
@@ -21,17 +21,11 @@ export default function (state=initialState, action) {
       };
 
     case 'RECEIVE_CONTRIBS':
-      // let totalContribs = [];
-      // action.payload.map(contrib => {
-      //   const eachContrib = Object.assign({}, contrib, { votes: 0 })
-      //   totalContribs.push(eachContrib);
-      // })
-
       return {
         ...state, 
-        payload: action.payload,
-        allContributors: action.payload,
-        filteredContributors: action.payload,
+        payload: [...state.payload, ...action.payload],  // {...state.payload, action.payload}
+        allContributors: [...state.payload, ...action.payload],
+        filteredContributors: [...state.payload, ...action.payload],
         isFetching: false
       }
     
@@ -50,10 +44,11 @@ export default function (state=initialState, action) {
       }
 
     case 'UPVOTE': 
-      return {
-        ...state,
-        payload: action.payload
-      }
+    return { 
+      ...state, 
+      allContributors: upvotedAllContribs, 
+      filteredContribs: upVotedFilteredContribs 
+    }
 
     default:
       return state;
