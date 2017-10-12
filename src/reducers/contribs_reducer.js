@@ -5,7 +5,7 @@ const initialState = {
   payload: [],
   page: 1,
   searchTerm: '',
-  allContributors: [],// kentou: {name: kenou, vote: 0},
+  allContributors: [],
   filteredContributors: []
 }
 
@@ -44,11 +44,14 @@ export default function (state=initialState, action) {
       }
 
     case 'UPVOTE': 
-    return { 
-      ...state, 
-      allContributors: upvotedAllContribs, 
-      filteredContribs: upVotedFilteredContribs 
-    }
+      console.log('action: ', action)
+      console.log('state in UPVOTE: ', state)
+      return { 
+        ...state, 
+        payload: [...state.payload, ...action.payload],
+        allContributors: [...state.payload, ...action.payload], 
+        filteredContribs: [...state.payload, ...action.payload] 
+      }
 
     default:
       return state;

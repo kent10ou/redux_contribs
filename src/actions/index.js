@@ -71,35 +71,23 @@ export const filterContribs = (text) =>
       })  
     dispatch({ type: 'FILTER_CONTRIBUTORS', payload: filteredContributors });  
   };
-/*
+
 export const upvote = (user) => {
-  console.log('user: ', user);
+  console.log('upvote called: ', user);
   return (dispatch, getState) => {
     // modify payload here
-    const { contribs: { allContributors, payload } } = getState();
-    console.log(allContributors)
-    const upvotedcontrib = payload.map(contrib => {
+    const { contribs: { allContributors } } = getState();
+    console.log('this is allcontribs-action: ',allContributors);
+    const upvotedcontrib = allContributors.find((contrib => {
       if (contrib.login == user) {
-        return Object.assign({}, contrib, {votes: contrib.votes + 1})
+        return {...contrib, ...contrib.votes + 1} 
       }
-    })
-    dispatch({ type: UPVOTE, payload: upvotedcontrib });
+    }))
+    dispatch({ type: 'UPVOTE', payload: upvotedcontrib }); // still working on passing the upvoted contributor
   }
 }
-*/
-export const upvote = (user) => 
-  (dispatch, getState) => {
-    console.log('this is being called', user)
-    const { contribs: { allContributors }} = getState();
-    const arrCopy = [...allContributors]
-    let update = arrCopy.find((contrib) => {
-      return contrib.login == user
-    })
-    update = update.votes + 1
 
-    // dispatch({type: UPVOTE, payload: })
-  }
-
+// this would be similar to upvote, once it's working
 export const downvote = (user) => {
   return {
     type: DOWNVOTE,
