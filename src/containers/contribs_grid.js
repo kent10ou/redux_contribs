@@ -7,6 +7,7 @@ import Contribs from './contribs'
 class ContribsGrid extends Component {
 
   renderData (data, idx) {
+    // console.warn('data: ', data);
     return (
       <Contribs key={idx} data={data} />
     )
@@ -14,7 +15,7 @@ class ContribsGrid extends Component {
 
   render() {
     const { contribs } = this.props;
-
+// console.warn('contribs: ', contribs.filteredContributors);
     // if data is not loaded yet -> 'loading', otherwise map through data and render Contribs comp. 
     if (contribs.isFetching && !contribs.payload.length) { return <p>Loading...</p> }
 

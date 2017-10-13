@@ -13,6 +13,7 @@ class App extends Component {
       searchTerm: '',
     }
     this.onChange = this.handleChange.bind(this);
+    this.onClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -35,11 +36,23 @@ class App extends Component {
     } 
   }
 
+  handleClick (e) {
+    e.preventDefault();
+    const { type, target } = e;
+    const { contribs } = this.props;
+
+    if (type === 'click') {
+      console.log(e.target.parentElement.parentElement.id)
+      const contribID = e.target.parentElement.parentElement.id;
+      this.props.upvote(contribID);
+    } 
+  }
+
   render() {
     const { contribs } = this.props;
 
     return (
-      <div role="presentation" onChange={this.onChange}>
+      <div role="presentation" onChange={this.onChange} onClick={this.onClick}>
         <h1>REDUX CONTRIBS</h1>
         {/* passing in search term here */}
         <SearchBar id="search-form" searchTerm={contribs.searchTerm} />

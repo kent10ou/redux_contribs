@@ -73,17 +73,17 @@ export const filterContribs = (text) =>
   };
 
 export const upvote = (user) => {
-  console.log('upvote called: ', user);
+
   return (dispatch, getState) => {
     // modify payload here
-    const { contribs: { allContributors } } = getState();
-    console.log('this is allcontribs-action: ',allContributors);
-    const upvotedcontrib = allContributors.find((contrib => {
-      if (contrib.login == user) {
-        return {...contrib, ...contrib.votes + 1} 
-      }
+    const { contribs: { payload, filteredContributors } } = getState();
+    console.log('payload: ', payload);
+    let arrCopy = [...filteredContributors]; // copy filteredContributors
+    const upvotedcontrib = arrCopy.find((contrib => {
+      return contrib.login === user
     }))
-    dispatch({ type: 'UPVOTE', payload: upvotedcontrib }); // still working on passing the upvoted contributor
+    upvotedcontrib.votes += 1;
+    dispatch({ type: 'UPVOTE', payload: arrCopy }); // still working on passing the upvoted contributor
   }
 }
 

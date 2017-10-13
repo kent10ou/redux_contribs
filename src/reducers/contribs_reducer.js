@@ -48,9 +48,7 @@ export default function (state=initialState, action) {
       console.log('state in UPVOTE: ', state)
       return { 
         ...state, 
-        payload: [...state.payload, ...action.payload],
-        allContributors: [...state.payload, ...action.payload], 
-        filteredContribs: [...state.payload, ...action.payload] 
+        filteredContribs: [...action.payload]
       }
 
     default:

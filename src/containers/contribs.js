@@ -11,22 +11,25 @@ class Contribs extends Component {
 
   render() {
     const { data } = this.props;
+    // console.warn("PROPS: ", this.props)
     return (
-      <div className='contrib-item'>
+      <div className='contrib-item' id={data.login}>
         <div><img src={data.avatar_url} className='avatar' key={data.id} /></div>
         <div className="username" key={data.login}>{data.login}</div>
         <div>Votes: {data.votes}</div>
         <div className='btn-group'>
-          <button className='btn btn-danger' onClick={() => this.props.downvote(data.login)}>-</button>
-          <button className='btn btn-success' onClick={() => this.props.upvote(data.login)}>+</button>
+          <button className='btn btn-danger'>-</button>
+          <button className='btn btn-success'>+</button>
         </div>
       </div>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ upvote, downvote }, dispatch);
-}
-// export default Contribs;
-export default connect(null, mapDispatchToProps)(Contribs);
+
+
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators({ upvote, downvote }, dispatch);
+// }
+export default Contribs;
+// export default connect(null, mapDispatchToProps)(Contribs);
