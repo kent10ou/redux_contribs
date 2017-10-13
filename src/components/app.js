@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    for (var i = 1; i < 2; i++) {
+    for (var i = 1; i < 6; i++) {
       this.props.fetchContribsIfNeeded(i);
     }
   }
@@ -42,9 +42,16 @@ class App extends Component {
     const { contribs } = this.props;
 
     if (type === 'click') {
-      console.log(e.target.parentElement.parentElement.id)
-      const contribID = e.target.parentElement.parentElement.id;
-      this.props.upvote(contribID);
+      const contribID = e.target.id;
+
+      console.dir(e.target)
+      // check id to see if upvote/downvote
+      if (e.target.id.includes('upvote')) {
+        this.props.upvote(contribID);
+      }
+      if (e.target.id.includes('downvote')) {
+        this.props.downvote(contribID)
+      }
     } 
   }
 

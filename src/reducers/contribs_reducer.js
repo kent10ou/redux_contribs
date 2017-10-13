@@ -51,6 +51,12 @@ export default function (state=initialState, action) {
         filteredContribs: [...action.payload]
       }
 
+    case 'DOWNVOTE':
+      return { 
+        ...state, 
+        filteredContribs: [...action.payload]
+      }
+
     default:
       return state;
   }

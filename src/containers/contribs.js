@@ -18,8 +18,8 @@ class Contribs extends Component {
         <div className="username" key={data.login}>{data.login}</div>
         <div>Votes: {data.votes}</div>
         <div className='btn-group'>
-          <button className='btn btn-danger'>-</button>
-          <button className='btn btn-success'>+</button>
+          <button id={`downvote-${data.login}`} className='btn btn-danger downvote'>-</button>
+          <button id={`upvote-${data.login}`} className='btn btn-success upvote'>+</button>
         </div>
       </div>
     );

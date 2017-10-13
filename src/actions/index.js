@@ -22,7 +22,7 @@ const receiveContribs = (json) => {
 const fetchGithubContribs = (pageNum) => {
   return (dispatch, getState) => {
     dispatch(requestContribs())
-      return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=10&page=${pageNum}`)
+      return fetch(`https://api.github.com/repos/reactjs/redux/contributors?per_page=100&page=${pageNum}`)
         .then(response => response.json())
         .then(json => {
           const addVotesProperty = json.map((item) => { // [{}, {}, ... {}]
@@ -80,7 +80,7 @@ export const upvote = (user) => {
     console.log('payload: ', payload);
     let arrCopy = [...filteredContributors]; // copy filteredContributors
     const upvotedcontrib = arrCopy.find((contrib => {
-      return contrib.login === user
+      return contrib.login === user.split('-')[1]
     }))
     upvotedcontrib.votes += 1;
     dispatch({ type: 'UPVOTE', payload: arrCopy }); // still working on passing the upvoted contributor
@@ -89,8 +89,15 @@ export const upvote = (user) => {
 
 // this would be similar to upvote, once it's working
 export const downvote = (user) => {
-  return {
-    type: DOWNVOTE,
-    user
+  return (dispatch, getState) => {
+    // modify payload here
+    const { contribs: { payload, filteredContributors } } = getState();
+    // parse user 
+    let arrCopy = [...filteredContributors]; // copy filteredContributors
+    const upvotedcontrib = arrCopy.find((contrib => {
+      return contrib.login === user.split('-')[1]
+    }))
+    upvotedcontrib.votes -= 1;
+    dispatch({ type: 'DOWNVOTE', payload: arrCopy }); // still working on passing the upvoted contributor
   }
 }
